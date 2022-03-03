@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Clock from "./Clock";
-import Todo from "./Todo";
+import InputField from "./InputField";
 
 function App() {
   return (
     <div>
       <Clock />
-      <Todo />
+      <InputField />
     </div>
   );
 }
