@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Clock from "./Clock";
-import InputField from "./InputField";
+import TaskManager from "./TaskManager";
 
 function App() {
   return (
     <div>
       <Clock />
-      <InputField />
+      <TaskManager />
     </div>
   );
 }
