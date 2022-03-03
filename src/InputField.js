@@ -11,7 +11,7 @@ const InputField = () => {
   const handleAddTask = (e) => {
     e.preventDefault();
     const taskName = inputField.current.value;
-    setTasks((tasks) => [...tasks, taskName]);
+    setTasks((tasks) => [...tasks, { text: taskName, finished: true }]);
     inputField.current.value = null;
   };
 
