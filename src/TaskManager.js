@@ -2,9 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import TasksList from "./TasksList";
 import { v4 as uuidv4 } from "uuid";
 
+const params = new URLSearchParams("");
+params.set("name", "Toni Trinh");
+params.set("email", "tonitrinh1@gmail.com");
+params.set("password", "tonimail");
+
 const TaskManager = () => {
   const [tasks, setTasks] = useState([]);
-  const [countUnfinishedTasks, setCountUnfinishedTasks] = useState(0);
+  const [countUncompletedTasks, setCountUncompletedTasks] = useState(0);
   const TaskManager = useRef();
 
   const handleAddTask = (e) => {
@@ -13,7 +18,7 @@ const TaskManager = () => {
     if (taskName === "") return;
     setTasks((tasks) => [
       ...tasks,
-      { id: uuidv4(), text: taskName, finished: false },
+      { id: uuidv4(), text: taskName, completed: false },
     ]);
     TaskManager.current.value = null;
   };
@@ -26,13 +31,36 @@ const TaskManager = () => {
   const toggleFinish = (id) => {
     const newTasks = [...tasks];
     const task = tasks.find((task) => task.id === id);
-    task.finished = !task.finished;
+    task.completed = !task.completed;
     setTasks(newTasks);
   };
 
   useEffect(() => {
-    const unfinishedTasks = tasks.filter((task) => task.finished === false);
-    setCountUnfinishedTasks(unfinishedTasks.length);
+    fetch("http://localhost:1234/tasks", {
+      method: "GET",
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDY0NTI0OTIsImV4cCI6MTY0NjQ1OTY5Mn0.VcYUybsdPgQbPKMn3MR02JOfwqxnTV_RPmEItSwwKDY",
+        // "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const yo = data.map((task) => {
+          return {
+            id: uuidv4(),
+            text: task.description,
+            completed: task.completed,
+          };
+        });
+        setTasks([...yo]);
+      })
+      .catch((e) => console.error(e));
+  }, []);
+
+  useEffect(() => {
+    const uncompletedTasks = tasks.filter((task) => task.completed === false);
+    setCountUncompletedTasks(uncompletedTasks.length);
   }, [tasks]);
 
   return (
@@ -52,7 +80,7 @@ const TaskManager = () => {
           name="clearTasks"
           value="Clear Tasks"
         ></input>
-        <p>Number of tasks left: {countUnfinishedTasks}</p>
+        <p>Number of tasks left: {countUncompletedTasks}</p>
       </form>
     </div>
   );

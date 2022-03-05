@@ -16,7 +16,7 @@ const Task = ({ task, toggleFinish }) => {
       <input
         style={{ margin: "1.15rem 1rem" }}
         type="checkbox"
-        checked={task.finish}
+        checked={task.completed}
         onChange={handleCheckBox}
       ></input>
       <p>{task.text}</p>
