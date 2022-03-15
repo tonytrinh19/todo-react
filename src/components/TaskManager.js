@@ -46,14 +46,15 @@ const TaskManager = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const yo = data.map((task) => {
+        if (data.error) return;
+        const tasks = data.map((task) => {
           return {
             id: uuidv4(),
             text: task.description,
             completed: task.completed,
           };
         });
-        setTasks([...yo]);
+        setTasks([...tasks]);
       })
       .catch((e) => console.error(e));
   }, []);

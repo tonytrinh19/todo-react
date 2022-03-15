@@ -1,10 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./pages/DashBoard";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <Routes>
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/" element={<App />}></Route>
+    </Routes>
+  </Router>,
   document.getElementById("root")
 );

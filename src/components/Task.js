@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 // different styles of styling components/elements
 const styleSheet = {
@@ -22,6 +23,11 @@ const Task = ({ task, toggleFinish }) => {
       <p>{task.text}</p>
     </div>
   );
+};
+
+Task.propTypes = {
+  task: PropTypes.object.isRequired,
+  toggleFinish: PropTypes.func.isRequired,
 };
 
 export default Task;
