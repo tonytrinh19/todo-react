@@ -1,43 +1,48 @@
 import React, { useEffect, useState, useRef } from "react";
 import TasksList from "./TasksList";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { addTask, clearTasks, toggleTask } from "../actions/tasks";
 import { count } from "../actions/countTasks";
 
-const TaskManager = () => {
+const TaskManager = ({
+  tasksState,
+  countTasksState,
+  addTask,
+  countTasks,
+  clearTasks,
+  toggleTask,
+}) => {
   const TaskManager = useRef();
-  const tasksState = useSelector((state) => state.tasks);
-  const countTasksState = useSelector((state) => state.count);
   const dispatch = useDispatch();
 
   const handleAddTask = (e) => {
     e.preventDefault();
     const taskName = TaskManager.current.value;
     if (taskName === "") return;
-    dispatch(addTask({ id: uuidv4(), text: taskName, completed: false }));
+    addTask({ id: uuidv4(), text: taskName, completed: false });
     TaskManager.current.value = null;
   };
 
   const handleClearTasks = (e) => {
     e.preventDefault();
-    dispatch(clearTasks());
+    clearTasks();
   };
 
   const toggleFinish = (id) => {
-    dispatch(toggleTask({ id }));
+    toggleTask(id);
   };
 
   useEffect(() => {
     const uncompletedTasks = tasksState.filter(
       (task) => task.completed === false
     );
-    dispatch(count(uncompletedTasks.length));
+    countTasks(uncompletedTasks.length);
   }, [tasksState]);
 
   return (
     <div>
-      <TasksList tasks={tasksState} toggleFinish={toggleFinish} />
+      <TasksList toggleFinish={toggleFinish} />
       <form>
         <input ref={TaskManager} type="text" placeholder="Task"></input>
         <input
@@ -58,7 +63,23 @@ const TaskManager = () => {
   );
 };
 
-export default TaskManager;
+const mapStateToProps = (state) => {
+  return {
+    tasksState: state.tasks,
+    countTasksState: state.count,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTask: (task) => dispatch(addTask(task)),
+    countTasks: (uncompletedTasks) => dispatch(count(uncompletedTasks)),
+    clearTasks: () => dispatch(clearTasks()),
+    toggleTask: (id) => dispatch(toggleTask({ id })),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskManager);
 
 //
 // useEffect(() => {
