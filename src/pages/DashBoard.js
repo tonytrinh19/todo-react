@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Clock from "../components/Clock";
 import TaskManager from "../components/TaskManager";
 
-const DashBoard = () => {
+export const DashBoard = () => {
   return (
     <div>
       <Clock />
@@ -10,5 +10,3 @@ const DashBoard = () => {
     </div>
   );
 };
-
-export default DashBoard;
