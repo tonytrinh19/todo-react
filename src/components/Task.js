@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { toggleTask } from "../actions/tasks";
 
 // different styles of styling components/elements
 const styleSheet = {
@@ -7,11 +9,11 @@ const styleSheet = {
   flexDirection: "row",
 };
 
-const Task = ({ task, toggleFinish }) => {
+const Task = ({ task, toggleTask }) => {
   const handleCheckBox = () => {
-    toggleFinish(task.id);
+    toggleTask(task.id);
   };
-
+  console.log(task.completed);
   return (
     <div style={styleSheet}>
       <input
@@ -27,7 +29,19 @@ const Task = ({ task, toggleFinish }) => {
 
 Task.propTypes = {
   task: PropTypes.object.isRequired,
-  toggleFinish: PropTypes.func.isRequired,
+  toggleTask: PropTypes.func.isRequired,
 };
 
-export default Task;
+const mapStateToProps = (state) => {
+  return {
+    tasksState: state.tasks,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleTask: (id) => dispatch(toggleTask({ id })),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Task);

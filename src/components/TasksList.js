@@ -4,19 +4,19 @@ import Task from "./Task";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-function TasksList({ tasksState, toggleFinish }) {
+function TasksList({ tasksState }) {
+  console.log(tasksState);
   return (
     <div>
       {tasksState.map((task) => {
-        return <Task key={task.id} task={task} toggleFinish={toggleFinish} />;
+        return <Task key={task.id} task={task} />;
       })}
     </div>
   );
 }
 
-Task.propTypes = {
-  task: PropTypes.object.isRequired,
-  toggleFinish: PropTypes.func.isRequired,
+TasksList.propTypes = {
+  tasksState: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => {
