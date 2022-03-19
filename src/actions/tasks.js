@@ -6,7 +6,7 @@ export const getTasks = () => (dispatch) => {
     method: "GET",
     headers: {
       Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc2NjgxNzgsImV4cCI6MTY0NzY3NTM3OH0.ZbqVNEqEkAy-vRTdW4ujzuaCx0jJhY_UHruE9QXKecc",
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc3MjQ4MDQsImV4cCI6MTY0NzczMjAwNH0.2sBrnh5Xr_i8qIbEdYz2YbX7yyCPnOiTrdkpNb3zbyM",
     },
   })
     .then((response) => response.json())
@@ -31,13 +31,13 @@ export const getTasks = () => (dispatch) => {
 };
 
 export const addTask =
-  ({ id, description, completed }) =>
+  ({ description, completed }) =>
   (dispatch) => {
     fetch(url, {
       method: "POST",
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc2NjgxNzgsImV4cCI6MTY0NzY3NTM3OH0.ZbqVNEqEkAy-vRTdW4ujzuaCx0jJhY_UHruE9QXKecc",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc3MjQ4MDQsImV4cCI6MTY0NzczMjAwNH0.2sBrnh5Xr_i8qIbEdYz2YbX7yyCPnOiTrdkpNb3zbyM",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ description, completed }),
@@ -47,7 +47,11 @@ export const addTask =
         if (data.error) return;
         dispatch({
           type: "tasks/addTask",
-          payload: { id, description, completed },
+          payload: {
+            id: data._id,
+            description: data.description,
+            completed: data.completed,
+          },
         });
       })
       .catch((e) => {
@@ -62,9 +66,31 @@ export const clearTasks = () => {
   };
 };
 
-export const toggleTask = ({ id }) => {
-  return {
-    type: "tasks/toggleTask",
-    payload: { id },
+export const toggleTask =
+  ({ id, completed }) =>
+  (dispatch) => {
+    const toggleUrl = url + "/" + id;
+    fetch(toggleUrl, {
+      method: "PATCH",
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc3MjQ4MDQsImV4cCI6MTY0NzczMjAwNH0.2sBrnh5Xr_i8qIbEdYz2YbX7yyCPnOiTrdkpNb3zbyM",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed: !completed }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) return;
+        dispatch({
+          type: "tasks/toggleTask",
+          payload: {
+            id: data._id,
+          },
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+        // dispatch error
+      });
   };
-};

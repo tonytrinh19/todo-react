@@ -11,7 +11,7 @@ const styleSheet = {
 
 const Task = ({ task, toggleTask }) => {
   const handleCheckBox = () => {
-    toggleTask(task.id);
+    toggleTask(task.id, task.completed);
   };
   return (
     <div style={styleSheet}>
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleTask: (id) => dispatch(toggleTask({ id })),
+    toggleTask: (id, completed) => dispatch(toggleTask({ id, completed })),
   };
 };
 

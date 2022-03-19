@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import TasksList from "./TasksList";
-import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import { addTask, clearTasks, getTasks } from "../actions/tasks";
 import { countTasks } from "../actions/countTasks";
@@ -20,7 +19,7 @@ const TaskManager = ({
     e.preventDefault();
     const taskName = TaskManager.current.value;
     if (taskName === "") return;
-    addTask({ id: uuidv4(), description: taskName, completed: false });
+    addTask({ description: taskName, completed: false });
     TaskManager.current.value = null;
   };
 

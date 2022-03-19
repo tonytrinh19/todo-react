@@ -1,5 +1,4 @@
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
 import Task from "./Task";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
