@@ -13,7 +13,6 @@ const Task = ({ task, toggleTask }) => {
   const handleCheckBox = () => {
     toggleTask(task.id);
   };
-  console.log(task.completed);
   return (
     <div style={styleSheet}>
       <input
@@ -22,7 +21,7 @@ const Task = ({ task, toggleTask }) => {
         checked={task.completed}
         onChange={handleCheckBox}
       ></input>
-      <p>{task.text}</p>
+      <p>{task.description}</p>
     </div>
   );
 };
@@ -34,7 +33,7 @@ Task.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    tasksState: state.tasks,
+    tasks: state.tasks,
   };
 };
 

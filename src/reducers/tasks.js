@@ -1,14 +1,13 @@
-import { v4 as uuidv4 } from "uuid";
-
-const initialState = [
-  { id: uuidv4(), text: "task 100", completed: false },
-  { id: uuidv4(), text: "task 3", completed: true },
-];
+const initialState = [];
 export const taskReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case "tasks/addTask":
+    case "tasks/getTasks": {
+      return payload;
+    }
+    case "tasks/addTask": {
       return [...state, payload];
+    }
     case "tasks/clearTasks":
       return [];
     case "tasks/toggleTask": {

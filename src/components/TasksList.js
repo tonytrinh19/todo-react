@@ -4,11 +4,10 @@ import Task from "./Task";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-function TasksList({ tasksState }) {
-  console.log(tasksState);
+function TasksList({ tasks }) {
   return (
     <div>
-      {tasksState.map((task) => {
+      {tasks.map((task) => {
         return <Task key={task.id} task={task} />;
       })}
     </div>
@@ -16,12 +15,12 @@ function TasksList({ tasksState }) {
 }
 
 TasksList.propTypes = {
-  tasksState: PropTypes.array.isRequired,
+  tasks: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    tasksState: state.tasks,
+    tasks: state.tasks,
   };
 };
 

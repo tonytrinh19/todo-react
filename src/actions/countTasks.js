@@ -10,7 +10,7 @@ export const decreaseUnfinishedTask = () => {
   };
 };
 
-export const count = (uncompletedTasks) => {
+export const countTasks = (uncompletedTasks) => {
   return {
     type: "countTasks/count",
     payload: uncompletedTasks,
