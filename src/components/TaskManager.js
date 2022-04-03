@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { addTask, clearTasks, getTasks } from "../actions/tasks";
 import { countTasks } from "../actions/countTasks";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 const TaskManager = ({
   tasks,
   countTasksState,
@@ -11,9 +12,11 @@ const TaskManager = ({
   countTasks,
   clearTasks,
   getTasks,
+  redirectTo,
 }) => {
   const TaskManager = useRef();
-  const url = "http://localhost:1234/tasks";
+
+  const navigate = useNavigate();
 
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -36,6 +39,10 @@ const TaskManager = ({
     const uncompletedTasks = tasks.filter((task) => task.completed === false);
     countTasks(uncompletedTasks.length);
   }, [tasks]);
+
+  useEffect(() => {
+    return navigate(redirectTo, { replace: true });
+  }, [redirectTo]);
 
   return (
     <div>
@@ -73,6 +80,7 @@ const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
     countTasksState: state.count,
+    redirectTo: state.redirect,
   };
 };
 

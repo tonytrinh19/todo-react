@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Clock from "../components/Clock";
 import TaskManager from "../components/TaskManager";
 import "../styles/main.css";

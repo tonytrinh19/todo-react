@@ -1,3 +1,5 @@
+import { Navigate } from "react-router-dom";
+
 const url = "http://localhost:1234/tasks";
 
 // With redux-thunk middleware, can now return a function instead of just ab object {type:...}
@@ -11,7 +13,11 @@ export const getTasks = () => (dispatch) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.error) return;
+      if (data.error)
+        return dispatch({
+          type: "redirect/login",
+          payload: "/login",
+        });
       const tasks = data.map((task) => {
         return {
           id: task._id,
