@@ -1,4 +1,4 @@
-export const redirectReducer = (state = {}, action) => {
+export const redirectReducer = (state = "", action) => {
   switch (action.type) {
     case "redirect/login":
       return action.payload;

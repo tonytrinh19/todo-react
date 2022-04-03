@@ -41,7 +41,13 @@ const TaskManager = ({
   }, [tasks]);
 
   useEffect(() => {
-    return navigate(redirectTo, { replace: true });
+    if (
+      redirectTo &&
+      Object.keys(redirectTo).length !== 0 &&
+      Object.getPrototypeOf(redirectTo !== Object.prototype)
+    ) {
+      navigate(redirectTo, { replace: true });
+    }
   }, [redirectTo]);
 
   return (
@@ -74,6 +80,7 @@ TaskManager.propTypes = {
   countTasks: PropTypes.func.isRequired,
   clearTasks: PropTypes.func.isRequired,
   getTasks: PropTypes.func.isRequired,
+  redirectTo: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {
