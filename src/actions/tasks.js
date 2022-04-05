@@ -1,14 +1,14 @@
 import { Navigate } from "react-router-dom";
-
-const url = "http://localhost:1234/tasks";
+import { urlDev } from "../constants/url";
+const url = urlDev + "/tasks";
+const token = localStorage.getItem("token");
 
 // With redux-thunk middleware, can now return a function instead of just ab object {type:...}
 export const getTasks = () => (dispatch) => {
   fetch(url, {
     method: "GET",
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc3MjQ4MDQsImV4cCI6MTY0NzczMjAwNH0.2sBrnh5Xr_i8qIbEdYz2YbX7yyCPnOiTrdkpNb3zbyM",
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => response.json())
@@ -42,8 +42,7 @@ export const addTask =
     fetch(url, {
       method: "POST",
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc3MjQ4MDQsImV4cCI6MTY0NzczMjAwNH0.2sBrnh5Xr_i8qIbEdYz2YbX7yyCPnOiTrdkpNb3zbyM",
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ description, completed }),
@@ -79,8 +78,7 @@ export const toggleTask =
     fetch(toggleUrl, {
       method: "PATCH",
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjIyZGVjYTU5ZDA4MDEzN2MxZjdlMDIiLCJpYXQiOjE2NDc3MjQ4MDQsImV4cCI6MTY0NzczMjAwNH0.2sBrnh5Xr_i8qIbEdYz2YbX7yyCPnOiTrdkpNb3zbyM",
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ completed: !completed }),
