@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addTask, clearTasks, getTasks } from "../actions/tasks";
 import { countTasks } from "../actions/countTasks";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+
 const TaskManager = ({
   tasks,
   countTasksState,
@@ -14,8 +14,6 @@ const TaskManager = ({
   getTasks,
 }) => {
   const TaskManager = useRef();
-
-  const navigate = useNavigate();
 
   const handleAddTask = (e) => {
     e.preventDefault();
