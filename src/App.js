@@ -9,6 +9,7 @@ import {
 import Login from "./pages/Login";
 import { Register } from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
 export const App = () => {
   return (
     <Router>
@@ -22,7 +23,14 @@ export const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/login" element={<Login />}></Route>
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        ></Route>
         <Route path="/register" element={<Register />}></Route>
       </Routes>
     </Router>

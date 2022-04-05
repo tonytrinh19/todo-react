@@ -21,10 +21,23 @@ export const isAuth = () => (dispatch) => {
           },
         });
       }
+      // done loading
+      dispatch({
+        type: "loading",
+        payload: {
+          loading: false,
+        },
+      });
     })
     .catch((error) => {
       // dispatch error
       console.log("dispatch error");
+      dispatch({
+        type: "loading",
+        payload: {
+          loading: false,
+        },
+      });
       console.log(error);
     });
 };
@@ -49,10 +62,22 @@ export const login = (email, password) => (dispatch) => {
           },
         });
       }
+      dispatch({
+        type: "loading",
+        payload: {
+          loading: false,
+        },
+      });
     })
     .catch((error) => {
       // dispatch error
       console.log("dispatch error");
+      dispatch({
+        type: "loading",
+        payload: {
+          loading: false,
+        },
+      });
       console.log(error);
     });
 };

@@ -1,18 +1,13 @@
-import { Navigate } from "react-router-dom";
 import { urlDev } from "../constants/url";
-const url = urlDev + "/users/login";
+const url = urlDev + "/users";
 
-export const getTasks = () => (dispatch) => {
+export const register = (name, email, password) => (dispatch) => {
   fetch(url, {
     method: "POST",
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.error)
-        return dispatch({
-          type: "redirect/login",
-          payload: "/login",
-        });
+      if (data.error) throw new Error(data.error);
       const tasks = data.map((task) => {
         return {
           id: task._id,

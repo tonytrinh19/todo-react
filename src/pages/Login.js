@@ -5,6 +5,7 @@ import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
 import { login } from "../actions/auth";
 import { connect, useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 const Login = ({ auth, login }) => {
   const emailInput = useRef(null);
@@ -51,6 +52,11 @@ const Login = ({ auth, login }) => {
       </Form>
     </>
   );
+};
+
+Login.propTypes = {
+  auth: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

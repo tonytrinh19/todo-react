@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 import { urlDev } from "../constants/url";
 const url = urlDev + "/tasks";
-const token = localStorage.getItem("token");
 
 // With redux-thunk middleware, can now return a function instead of just ab object {type:...}
 export const getTasks = () => (dispatch) => {
+  const token = localStorage.getItem("token");
   fetch(url, {
     method: "GET",
     headers: {
@@ -13,11 +13,7 @@ export const getTasks = () => (dispatch) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.error)
-        return dispatch({
-          type: "redirect/login",
-          payload: "/login",
-        });
+      if (data.error) throw new Error(data.error);
       const tasks = data.map((task) => {
         return {
           id: task._id,
@@ -39,6 +35,8 @@ export const getTasks = () => (dispatch) => {
 export const addTask =
   ({ description, completed }) =>
   (dispatch) => {
+    const token = localStorage.getItem("token");
+
     fetch(url, {
       method: "POST",
       headers: {
@@ -74,6 +72,7 @@ export const clearTasks = () => {
 export const toggleTask =
   ({ id, completed }) =>
   (dispatch) => {
+    const token = localStorage.getItem("token");
     const toggleUrl = url + "/" + id;
     fetch(toggleUrl, {
       method: "PATCH",
